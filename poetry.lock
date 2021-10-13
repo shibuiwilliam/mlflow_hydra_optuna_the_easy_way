@@ -363,6 +363,22 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "lightgbm"
+version = "3.3.0"
+description = "LightGBM Python Package"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+numpy = "*"
+scikit-learn = "!=0.22.0"
+scipy = "*"
+
+[package.extras]
+dask = ["dask[array] (>=2.0.0)", "dask[dataframe] (>=2.0.0)", "dask[distributed] (>=2.0.0)", "pandas"]
+
+[[package]]
 name = "mako"
 version = "1.1.5"
 description = "A super-fast templating language that borrows the  best ideas from the existing templating languages."
@@ -921,7 +937,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "b4553bd239dbda22e0a2d108e180148545969407d94b1564cc62f47b07d57232"
+content-hash = "18987b40e5879313e72a016c0af1851a678eb0f222ad58d649e2df46840c0231"
 
 [metadata.files]
 alembic = [
@@ -1084,6 +1100,13 @@ jinja2 = [
 joblib = [
     {file = "joblib-1.1.0-py2.py3-none-any.whl", hash = "sha256:f21f109b3c7ff9d95f8387f752d0d9c34a02aa2f7060c2135f465da0e5160ff6"},
     {file = "joblib-1.1.0.tar.gz", hash = "sha256:4158fcecd13733f8be669be0683b96ebdbbd38d23559f54dca7205aea1bf1e35"},
+]
+lightgbm = [
+    {file = "lightgbm-3.3.0-py3-none-macosx_10_14_x86_64.macosx_10_15_x86_64.macosx_11_0_x86_64.whl", hash = "sha256:e528550c8d70dd11c6a4eeeeab6753227061184057dca45d68a9d7ccc3f8236e"},
+    {file = "lightgbm-3.3.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:230e5c06032f7ba275ee1eca616b5350742ef6a00c04ebfc81b516a89bc96119"},
+    {file = "lightgbm-3.3.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:09294b50d590a69025e79f9e94470ffcd60f8a86a6223e4a723ea36124f6e14e"},
+    {file = "lightgbm-3.3.0-py3-none-win_amd64.whl", hash = "sha256:8a746aff15828a685ba1eefd1b8bbc8996acef902232f1d6fea87b378b653092"},
+    {file = "lightgbm-3.3.0.tar.gz", hash = "sha256:107ae7babbbda2c2f0e07484f0c53cdeb455e9219235f79dc4e1685d7541e505"},
 ]
 mako = [
     {file = "Mako-1.1.5-py2.py3-none-any.whl", hash = "sha256:6804ee66a7f6a6416910463b00d76a7b25194cd27f1918500c5bd7be2a088a23"},
