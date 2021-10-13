@@ -23,15 +23,15 @@ req_dev:
 
 .PHONY: lint
 lint:
-	black --check --diff --line-length 120 .
+	black --check --diff --line-length 120 . --exclude outputs
 
 .PHONY: sort
 sort:
-	isort .
+	isort . --skip outputs
 
 .PHONY: fmt
 fmt: sort
-	black --line-length 120 .
+	black --line-length 120 . --exclude outputs
 
 
 .PHONY: build
