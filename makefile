@@ -21,6 +21,10 @@ req_dev:
 		-f requirements.txt \
 		--output requirements.dev.txt
 
+.PHONY: install_req
+install_req:
+	pip install mlflow
+
 .PHONY: lint
 lint:
 	black --check --diff --line-length 120 . --exclude outputs

@@ -90,8 +90,8 @@ $ make run
 docker run \
     -it \
     --name the_easy_way \
-    -v /Users/shibuiyuusuke/mlflow_hydra_optuna_the_easy_way/hydra:/opt/hydra \
-    -v /Users/shibuiyuusuke/mlflow_hydra_optuna_the_easy_way/outputs:/opt/outputs \
+    -v ~/mlflow_hydra_optuna_the_easy_way/hydra:/opt/hydra \
+    -v ~/mlflow_hydra_optuna_the_easy_way/outputs:/opt/outputs \
     mlflow_hydra_optuna:the_easy_way \
     python -m src.main
 [2021-10-13 13:27:41,711] [1] [__main__] [INFO] [main.py:59] [main] config: {'optuna': {'cv': 5, 'n_trials': 20, 'n_jobs': 1}, 'random_forest_classifier': {'parameters': [{'name': 'criterion', 'suggest_type': 'categorical', 'value_range': ['gini', 'entropy']}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_leaf_nodes', 'suggest_type': 'int', 'value_range': [2, 100]}]}, 'lightgbm_classifier': {'parameters': [{'name': 'num_leaves', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'learning_rage', 'suggest_type': 'uniform', 'value_range': [0.0001, 0.01]}, {'name': 'feature_fraction', 'suggest_type': 'uniform', 'value_range': [0.001, 0.9]}]}}
