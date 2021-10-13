@@ -1,21 +1,38 @@
-from typing import Dict, Optional
-
+from typing import Dict, Iterator, List, Union
+from enum import Enum
+import numpy as np
+import mlflow
 import optuna
 import pandas as pd
-from sklearn.model_selection import StratifiedKFold, cross_validate
-from sklearn.pipeline import Pipeline
+from sklearn.model_selection import cross_validate
 
 from src.middleware.logger import configure_logger
-from src.model.model import LightGBMClassifierPipeline, PreprocessPipeline, RandomForestClassifierPipeline
+from src.model.model import SUGGEST_TYPE, AbstraceEstimator
 
 logger = configure_logger(name=__name__)
 
 
-class OptunaRunner:
+class DIRECTION(Enum):
+    MINIMIZE = "minimize"
+    MAXIMIZE = "maximize"
+
+
+def mlflow_callback(
+    study: optuna.Study,
+    trial: optuna.Trial,
+):
+    trial_value = trial.value if trial.value is not None else float("nan")
+    with mlflow.start_run(run_name=study.study_name):
+        mlflow.log_params(trial.params)
+        mlflow.log_metrics({"accuracy": trial_value})
+
+
+class OptunaRunner(object):
     def __init__(
         self,
         data: pd.DataFrame,
         target: pd.DataFrame,
+        direction: DIRECTION = DIRECTION.MAXIMIZE,
         cv: int = 5,
         scorings: Dict[str, str] = {
             "accuracy": "accuracy",
@@ -25,61 +42,88 @@ class OptunaRunner:
     ):
         self.data = data
         self.target = target
+        self.direction = direction
         self.cv = cv
         self.scorings = scorings
 
         optuna.logging.enable_default_handler()
 
+    def optimize(
+        self,
+        estimators: List[AbstraceEstimator],
+        n_trials: int = 20,
+        n_jobs: int = 1,
+    ) -> List[Dict[str, Union[str, float]]]:
+        return list(
+            self._optimize(
+                estimators=estimators,
+                n_jobs=n_jobs,
+                n_trials=n_trials,
+            )
+        )
+
     def _optimize(
         self,
-        jobs: Optional[Dict[str, Callable]] = None,
-        n_trials: int = 10,
+        estimators: List[AbstraceEstimator],
+        n_trials: int = 20,
         n_jobs: int = 1,
     ) -> Iterator[Dict[str, Union[str, float]]]:
-        if jobs is None:
-            jobs = {
-                "LogisticRegression": self.optimize_logistic_regression,
-                "SVC": self.optimize_svc,
-                "DecisionTree": self.optimize_decision_tree,
-                "RandomForest": self.optimize_random_forest,
+        for estimator in estimators:
+            logger.info(f"estimator: {estimator}")
+            study = optuna.create_study(direction=self.direction.value)
+            study.optimize(
+                self.objective(estimator=estimator),
+                n_jobs=n_jobs,
+                n_trials=n_trials,
+                callbacks=[mlflow_callback],
+            )
+            result = {
+                "estimator": estimator.name,
+                "best_score": study.best_value,
+                "best_params": study.best_params,
             }
-
-        for model, job in tqdm(jobs.items()):
-            study = optuna.create_study()
-            study.optimize(job, n_jobs=n_jobs, n_trials=n_trials)
-            result = {"model": model, "best_score": 1 - study.best_value, "best_params": study.best_params}
+            logger.info(f"result for {estimator.name}: {result}")
             yield result
 
-    def optimize(
-        self, jobs: Optional[Dict[str, Callable]] = None, n_trials: int = 10, n_jobs: int = 1
-    ) -> List[Dict[str, Union[str, float]]]:
-        """
-        Args:
-            jobs:
-            n_trials:
-            n_jobs:
-        Returns:
-        """
-        return list(self._optimize(jobs=jobs, n_jobs=n_jobs, n_trials=n_trials))
+    def objective(
+        self,
+        estimator: AbstraceEstimator,
+    ):
+        def _objective(
+            trial: optuna.Trial,
+        ) -> float:
 
-    def optimize_logistic_regression(self, trial: optuna.Trial) -> float:
+            params = {}
+            for search_param in estimator.search_params:
+                if search_param.suggest_type == SUGGEST_TYPE.CATEGORICAL:
+                    params[search_param.name] = trial.suggest_categorical(
+                        search_param.name,
+                        search_param.value_range,
+                    )
+                elif search_param.suggest_type == SUGGEST_TYPE.INT:
+                    params[search_param.name] = trial.suggest_int(
+                        search_param.name,
+                        search_param.value_range[0],
+                        search_param.value_range[1],
+                    )
+                elif search_param.suggest_type == SUGGEST_TYPE.UNIFORM:
+                    params[search_param.name] = trial.suggest_uniform(
+                        search_param.name,
+                        search_param.value_range[0],
+                        search_param.value_range[1],
+                    )
 
-        params = {
-            "C": trial.suggest_uniform("C", 0.1, 10),
-            "fit_intercept": trial.suggest_categorical("fit_intercept", [True, False]),
-            "intercept_scaling": trial.suggest_uniform("intercept_scaling", 0.1, 2),
-            "solver": trial.suggest_categorical("solver", ["newton-cg", "lbfgs", "liblinear", "saga"]),
-            "max_iter": trial.suggest_int("max_iter", 100, 1000),
-            "multi_class": trial.suggest_categorical("multi_class", ["auto"]),
-        }
+            logger.debug(f"params: {params}")
 
-        clf = self._add_model(LogisticRegression(**params))
-        score = cross_validate(
-            estimator=clf,
-            x=self.data,
-            y=self.target,
-            cv=self.cv,
-            scoring=self.scoring,
-            error_score=np.nan,
-        )
-        return 1 - score.mean()
+            scores = cross_validate(
+                estimator=estimator.pipeline,
+                X=self.data,
+                y=self.target,
+                cv=self.cv,
+                scoring=self.scorings,
+                error_score=np.nan,
+            )
+            logger.debug(f"result: {scores}")
+            return scores["test_accuracy"].mean()
+
+        return _objective
