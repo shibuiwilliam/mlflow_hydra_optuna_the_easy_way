@@ -3,6 +3,10 @@ from dataclasses import dataclass
 import pandas as pd
 from sklearn.datasets import load_iris
 
+from src.middleware.logger import configure_logger
+
+logger = configure_logger(name=__name__)
+
 
 @dataclass
 class IrisDataset:

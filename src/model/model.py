@@ -6,6 +6,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
+from src.middleware.logger import configure_logger
+
+logger = configure_logger(name=__name__)
+
 
 class PreprocessPipeline(object):
     def __init__(self):
