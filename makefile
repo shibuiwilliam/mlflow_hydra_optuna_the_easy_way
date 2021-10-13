@@ -47,6 +47,7 @@ run: build
 		-it \
 		--name $(TAG) \
 		-v $(ABSOLUTE_PATH)/hydra:/opt/hydra \
+		-v $(ABSOLUTE_PATH)/outputs:/opt/outputs \
 		$(DOCKER_IMAGE) \
 		python -m src.main
 
@@ -56,6 +57,7 @@ run_in: build
 		-it \
 		--name $(TAG) \
 		-v $(ABSOLUTE_PATH)/hydra:/opt/hydra \
+		-v $(ABSOLUTE_PATH)/outputs:/opt/outputs \
 		$(DOCKER_IMAGE) \
 		bash
 
