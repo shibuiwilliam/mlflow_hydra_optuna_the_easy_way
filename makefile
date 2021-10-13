@@ -15,3 +15,24 @@ req:
 		--without-hashes \
 		-f requirements.txt \
 		--output requirements.txt
+
+.PHONY: req_dev
+req_dev:
+	poetry export \
+		--dev \
+		--without-hashes \
+		-f requirements.txt \
+		--output requirements.dev.txt
+
+.PHONY: lint
+lint:
+	black --check --diff --line-length 120 .
+
+.PHONY: sort
+sort:
+	isort .
+
+.PHONY: fmt
+fmt: sort
+	black --line-length 120 .
+
