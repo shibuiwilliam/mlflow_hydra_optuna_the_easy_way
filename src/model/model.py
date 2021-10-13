@@ -1,10 +1,10 @@
-from typing import Optional, Union
 from copy import deepcopy
+from typing import Optional, Union
 
+from lightgbm import LGBMClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from lightgbm import LGBMClassifier
 
 
 class PreprocessPipeline(object):
@@ -12,14 +12,14 @@ class PreprocessPipeline(object):
         self.pipeline: Pipeline = None
         self.set_default()
 
-    def set_default(self):
+    def define_default(self):
         self.pipeline = Pipeline(
             [
                 ("standard_scaler", StandardScaler()),
             ]
         )
 
-    def set(
+    def define_pipeline(
         self,
         pipeline: Pipeline,
     ):
@@ -32,14 +32,33 @@ class RandomForestClassifierPipeline(object):
         preprocess_pipeline: Pipeline,
     ):
         self.__preprocess_pipeline = preprocess_pipeline
-        self.random_forest_classifier: RandomForestClassifier = RandomForestClassifier()
+        self.model: RandomForestClassifier = RandomForestClassifier()
         self.pipeline = deepcopy(self.__preprocess_pipeline)
-        self.pipeline.steps.append(("model", self.random_forest_classifier))
+        self.pipeline.steps.append(("model", self.model))
 
-    def define_random_forest_classifier(
+    def define_model(
         self,
-        **random_forest_classifier_params,
+        **params,
     ):
-        self.random_forest_classifier = RandomForestClassifier(**random_forest_classifier_params)
+        self.model = RandomForestClassifier(**params)
         self.pipeline = deepcopy(self.__preprocess_pipeline)
-        self.pipeline.steps.append(("model", self.random_forest_classifier))
+        self.pipeline.steps.append(("model", self.model))
+
+
+class LightGBMClassifierPipeline(object):
+    def __init__(
+        self,
+        preprocess_pipeline: Pipeline,
+    ):
+        self.__preprocess_pipeline = preprocess_pipeline
+        self.model: LGBMClassifier = LGBMClassifier()
+        self.pipeline = deepcopy(self.__preprocess_pipeline)
+        self.pipeline.steps.append(("model", self.model))
+
+    def define_model(
+        self,
+        **params,
+    ):
+        self.model = RandomForestClassifier(**params)
+        self.pipeline = deepcopy(self.__preprocess_pipeline)
+        self.pipeline.steps.append(("model", self.model))
