@@ -36,6 +36,7 @@ class Trainer(object):
                 test_data=test_data,
                 test_target=test_target,
             )
+
             mlflow.log_params(pipeline.params)
             mlflow.log_metrics(
                 {
@@ -47,6 +48,7 @@ class Trainer(object):
             pipeline.save(
                 save_file_path=save_file_path,
             )
+            mlflow.log_param("model", pipeline.name)
             mlflow.log_artifact(save_file_path)
         return evaluation
 

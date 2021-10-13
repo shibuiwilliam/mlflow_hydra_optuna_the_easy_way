@@ -42,7 +42,7 @@ build:
 		.
 
 .PHONY: run
-run: stop build
+run:
 	docker run \
 		-it \
 		--name $(TAG) \
@@ -52,7 +52,7 @@ run: stop build
 		python -m src.main
 
 .PHONY: run_in
-run_in: stop build
+run_in:
 	docker run \
 		-it \
 		--name $(TAG) \
