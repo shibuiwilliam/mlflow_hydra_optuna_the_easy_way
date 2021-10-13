@@ -1,16 +1,20 @@
+from typing import Dict, List, Union
+
 from omegaconf import DictConfig
+from sklearn.model_selection import train_test_split
+
 import hydra
-from typing import List
+from src.dataset.load_dataset import load_iris_dataset
 from src.middleware.logger import configure_logger
-from src.search.search import OptunaRunner, DIRECTION
 from src.model.model import (
     SUGGEST_TYPE,
-    SearchParams,
+    LightGBMClassifierPipeline,
     PreprocessPipeline,
     RandomForestClassifierPipeline,
-    LightGBMClassifierPipeline,
+    SearchParams,
 )
-from src.dataset.load_dataset import load_iris_dataset
+from src.search.search import DIRECTION, OptunaRunner
+from src.train.train import Trainer
 
 logger = configure_logger(name=__name__)
 
@@ -81,7 +85,47 @@ def main(cfg: DictConfig):
         n_trials=cfg.optuna.n_trials,
         n_jobs=cfg.optuna.n_jobs,
     )
-    logger.info(f"results: {results}")
+    logger.info(f"parameter search results: {results}")
+
+    random_forest_best_params: Dict[str, Union[str, float]] = {}
+    lightgbm_best_params: Dict[str, Union[str, float]] = {}
+    for result in results:
+        if result["estimator"] == random_forest_classifier_pipeline.name:
+            random_forest_best_params = result["best_params"]
+        elif result["estimator"] == lightgbm_classifier_pipeline.name:
+            lightgbm_best_params = result["best_params"]
+
+    random_forest_classifier_pipeline.define_model(**random_forest_best_params)
+    lightgbm_classifier_pipeline.define_model(**lightgbm_best_params)
+
+    train_data, test_data, train_target, test_target = train_test_split(
+        iris_dataset.data,
+        iris_dataset.target,
+        test_size=0.3,
+        random_state=0,
+        stratify=iris_dataset.target,
+    )
+    trainer = Trainer()
+
+    evaluation = trainer.train_and_evaluate(
+        pipeline=random_forest_classifier_pipeline,
+        train_data=train_data,
+        train_target=train_target,
+        test_data=test_data,
+        test_target=test_target,
+        save_file_path=f"{random_forest_classifier_pipeline.name}.pickle",
+    )
+    logger.info(f"random forest evaluation result: {evaluation}")
+
+    evaluation = trainer.train_and_evaluate(
+        pipeline=lightgbm_classifier_pipeline,
+        train_data=train_data,
+        train_target=train_target,
+        test_data=test_data,
+        test_target=test_target,
+        save_file_path=f"{lightgbm_classifier_pipeline.name}.pickle",
+    )
+    logger.info(f"lightgbm evaluation result: {evaluation}")
 
 
 if __name__ == "__main__":

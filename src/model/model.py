@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from enum import Enum
-from typing import Any, List
+from typing import Any, Dict, List
 
+import joblib
 from lightgbm import LGBMClassifier
 from pydantic import BaseModel
 from sklearn.ensemble import RandomForestClassifier
@@ -47,7 +48,7 @@ class PreprocessPipeline(object):
         self.pipeline = pipeline
 
 
-class AbstraceEstimator(ABC):
+class AbstractEstimator(ABC):
     def __init__(
         self,
         preprocess_pipeline: Pipeline,
@@ -56,6 +57,7 @@ class AbstraceEstimator(ABC):
         self.preprocess_pipeline = preprocess_pipeline
         self.pipeline: Pipeline = None
         self.search_params: List[SearchParams] = []
+        self.params: Dict = {}
 
     @abstractmethod
     def define_model(
@@ -75,8 +77,15 @@ class AbstraceEstimator(ABC):
     ):
         raise NotImplementedError
 
+    @abstractmethod
+    def save(
+        self,
+        save_file_path: str,
+    ):
+        raise NotImplementedError
 
-class RandomForestClassifierPipeline(AbstraceEstimator):
+
+class RandomForestClassifierPipeline(AbstractEstimator):
     def __init__(
         self,
         preprocess_pipeline: Pipeline,
@@ -97,6 +106,7 @@ class RandomForestClassifierPipeline(AbstraceEstimator):
         self,
         **params,
     ):
+        self.params = params
         self.model = RandomForestClassifier(**params)
         self.pipeline = deepcopy(self.preprocess_pipeline.pipeline)
         self.pipeline.steps.append(("model", self.model))
@@ -127,8 +137,14 @@ class RandomForestClassifierPipeline(AbstraceEstimator):
         self.search_params = search_params
         logger.info(f"new search param: {self.search_params}")
 
+    def save(
+        self,
+        save_file_path: str,
+    ):
+        joblib.dump(self.pipeline, save_file_path)
 
-class LightGBMClassifierPipeline(AbstraceEstimator):
+
+class LightGBMClassifierPipeline(AbstractEstimator):
     def __init__(
         self,
         preprocess_pipeline: Pipeline,
@@ -149,6 +165,7 @@ class LightGBMClassifierPipeline(AbstraceEstimator):
         self,
         **params,
     ):
+        self.params = params
         self.model = LGBMClassifier(**params)
         self.pipeline = deepcopy(self.preprocess_pipeline.pipeline)
         self.pipeline.steps.append(("model", self.model))
@@ -183,3 +200,9 @@ class LightGBMClassifierPipeline(AbstraceEstimator):
     ):
         self.search_params = search_params
         logger.info(f"new search param: {self.search_params}")
+
+    def save(
+        self,
+        save_file_path: str,
+    ):
+        joblib.dump(self.pipeline, save_file_path)
