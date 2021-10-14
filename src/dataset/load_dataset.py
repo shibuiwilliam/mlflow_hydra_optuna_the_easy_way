@@ -15,6 +15,7 @@ class IrisDataset:
 
 
 def load_iris_dataset() -> IrisDataset:
+    logger.info("load iris dataset")
     data = load_iris()
     data_df = pd.DataFrame(data.data, columns=data.feature_names)
     target_df = pd.DataFrame(data.target, columns=["target"])

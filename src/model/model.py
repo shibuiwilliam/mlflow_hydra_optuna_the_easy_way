@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from copy import deepcopy
 from enum import Enum
 from typing import Any, Dict, List
+import yaml
 
 import joblib
 from lightgbm import LGBMClassifier
@@ -84,6 +85,13 @@ class AbstractEstimator(ABC):
     ):
         raise NotImplementedError
 
+    @abstractmethod
+    def save_params(
+        self,
+        save_file_path: str,
+    ):
+        raise NotImplementedError
+
 
 class RandomForestClassifierPipeline(AbstractEstimator):
     def __init__(
@@ -142,6 +150,13 @@ class RandomForestClassifierPipeline(AbstractEstimator):
         save_file_path: str,
     ):
         joblib.dump(self.pipeline, save_file_path)
+
+    def save_params(
+        self,
+        save_file_path: str,
+    ):
+        with open(save_file_path, "w") as f:
+            yaml.dump(self.params, f)
 
 
 class LightGBMClassifierPipeline(AbstractEstimator):
@@ -206,3 +221,10 @@ class LightGBMClassifierPipeline(AbstractEstimator):
         save_file_path: str,
     ):
         joblib.dump(self.pipeline, save_file_path)
+
+    def save_params(
+        self,
+        save_file_path: str,
+    ):
+        with open(save_file_path, "w") as f:
+            yaml.dump(self.params, f)

@@ -1,4 +1,6 @@
 from typing import Dict, List, Union
+import os
+import yaml
 
 from omegaconf import DictConfig
 from sklearn.model_selection import train_test_split
@@ -57,8 +59,8 @@ def parse_params(params: DictConfig) -> List[SearchParams]:
 )
 def main(cfg: DictConfig):
     logger.info(f"config: {cfg}")
-    cwd = hydra.utils.get_original_cwd()
-    logger.info(f"cwd: {cwd}")
+    cwd = os.getcwd()
+    logger.info(f"os cwd: {cwd}")
 
     preprocess_pipeline = PreprocessPipeline()
 
@@ -126,6 +128,21 @@ def main(cfg: DictConfig):
         save_file_path=f"{lightgbm_classifier_pipeline.name}.pickle",
     )
     logger.info(f"lightgbm evaluation result: {evaluation}")
+
+    random_forest_classifier_pipeline.save_params(
+        save_file_path=os.path.join(
+            cwd,
+            ".hydra",
+            f"{random_forest_classifier_pipeline.name}.yaml",
+        )
+    )
+    lightgbm_classifier_pipeline.save_params(
+        save_file_path=os.path.join(
+            cwd,
+            ".hydra",
+            f"{lightgbm_classifier_pipeline.name}.yaml",
+        )
+    )
 
 
 if __name__ == "__main__":
