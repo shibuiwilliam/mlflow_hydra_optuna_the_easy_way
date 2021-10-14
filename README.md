@@ -1,6 +1,6 @@
 # mlflow_hydra_optuna_the_easy_way
 
-combination of mlflow, hydra and optuna in the easy way
+The easy way to combine [mlflow](https://mlflow.org/), [hydra](https://hydra.cc/) and [optuna](https://optuna.org/) into one machine learning pipeline.
 
 ## Objective
 
