@@ -1,7 +1,9 @@
 # mlflow_hydra_optuna_the_easy_way
+
 combination of mlflow, hydra and optuna in the easy way
 
 ## Objective
+
 TODO
 
 ## Usage
@@ -88,39 +90,26 @@ lightgbm_classifier:
 
 $ make run
 docker run \
-    -it \
-    --name the_easy_way \
-    -v ~/mlflow_hydra_optuna_the_easy_way/hydra:/opt/hydra \
-    -v ~/mlflow_hydra_optuna_the_easy_way/outputs:/opt/outputs \
-    mlflow_hydra_optuna:the_easy_way \
-    python -m src.main
-[2021-10-13 13:27:41,711] [1] [__main__] [INFO] [main.py:59] [main] config: {'optuna': {'cv': 5, 'n_trials': 20, 'n_jobs': 1}, 'random_forest_classifier': {'parameters': [{'name': 'criterion', 'suggest_type': 'categorical', 'value_range': ['gini', 'entropy']}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_leaf_nodes', 'suggest_type': 'int', 'value_range': [2, 100]}]}, 'lightgbm_classifier': {'parameters': [{'name': 'num_leaves', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'learning_rage', 'suggest_type': 'uniform', 'value_range': [0.0001, 0.01]}, {'name': 'feature_fraction', 'suggest_type': 'uniform', 'value_range': [0.001, 0.9]}]}}
-[2021-10-13 13:27:41,711][__main__][INFO] - config: {'optuna': {'cv': 5, 'n_trials': 20, 'n_jobs': 1}, 'random_forest_classifier': {'parameters': [{'name': 'criterion', 'suggest_type': 'categorical', 'value_range': ['gini', 'entropy']}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_leaf_nodes', 'suggest_type': 'int', 'value_range': [2, 100]}]}, 'lightgbm_classifier': {'parameters': [{'name': 'num_leaves', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'learning_rage', 'suggest_type': 'uniform', 'value_range': [0.0001, 0.01]}, {'name': 'feature_fraction', 'suggest_type': 'uniform', 'value_range': [0.001, 0.9]}]}}
-[2021-10-13 13:27:41,712] [1] [__main__] [INFO] [main.py:61] [main] cwd: /opt
-[2021-10-13 13:27:41,712][__main__][INFO] - cwd: /opt
-[2021-10-13 13:27:41,713] [1] [src.model.model] [INFO] [model.py:35] [__init__] initialize preprocess pipeline: Pipeline(steps=[('standard_scaler', StandardScaler())])
-[2021-10-13 13:27:41,713][src.model.model][INFO] - initialize preprocess pipeline: Pipeline(steps=[('standard_scaler', StandardScaler())])
-[2021-10-13 13:27:41,715] [1] [src.model.model] [INFO] [model.py:103] [__init__] initialize random forest classifier pipeline: Pipeline(steps=[('standard_scaler', StandardScaler()),
+	-it \
+	--name the_easy_way \
+	-v ~/mlflow_hydra_optuna_the_easy_way/hydra:/opt/hydra \
+	-v ~/mlflow_hydra_optuna_the_easy_way/outputs:/opt/outputs \
+	mlflow_hydra_optuna:the_easy_way \
+	python -m src.main
+[2021-10-14 00:41:29,804][__main__][INFO] - config: {'optuna': {'cv': 5, 'n_trials': 20, 'n_jobs': 1}, 'random_forest_classifier': {'parameters': [{'name': 'criterion', 'suggest_type': 'categorical', 'value_range': ['gini', 'entropy']}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_leaf_nodes', 'suggest_type': 'int', 'value_range': [2, 100]}]}, 'lightgbm_classifier': {'parameters': [{'name': 'num_leaves', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'max_depth', 'suggest_type': 'int', 'value_range': [2, 100]}, {'name': 'learning_rage', 'suggest_type': 'uniform', 'value_range': [0.0001, 0.01]}, {'name': 'feature_fraction', 'suggest_type': 'uniform', 'value_range': [0.001, 0.9]}]}}
+[2021-10-14 00:41:29,805][__main__][INFO] - os cwd: /opt/outputs/2021-10-14/00-41-29
+[2021-10-14 00:41:29,807][src.model.model][INFO] - initialize preprocess pipeline: Pipeline(steps=[('standard_scaler', StandardScaler())])
+[2021-10-14 00:41:29,810][src.model.model][INFO] - initialize random forest classifier pipeline: Pipeline(steps=[('standard_scaler', StandardScaler()),
                 ('model', RandomForestClassifier())])
-[2021-10-13 13:27:41,715][src.model.model][INFO] - initialize random forest classifier pipeline: Pipeline(steps=[('standard_scaler', StandardScaler()),
-                ('model', RandomForestClassifier())])
-[2021-10-13 13:27:41,717] [1] [__main__] [INFO] [main.py:50] [parse_params] params: [SearchParams(name='criterion', suggest_type=<SUGGEST_TYPE.CATEGORICAL: 'categorical'>, value_range=['gini', 'entropy']), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_leaf_nodes', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100))]
-[2021-10-13 13:27:41,717][__main__][INFO] - params: [SearchParams(name='criterion', suggest_type=<SUGGEST_TYPE.CATEGORICAL: 'categorical'>, value_range=['gini', 'entropy']), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_leaf_nodes', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100))]
-[2021-10-13 13:27:41,717] [1] [src.model.model] [INFO] [model.py:138] [define_search_params] new search param: [SearchParams(name='criterion', suggest_type=<SUGGEST_TYPE.CATEGORICAL: 'categorical'>, value_range=['gini', 'entropy']), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_leaf_nodes', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100))]
-[2021-10-13 13:27:41,717][src.model.model][INFO] - new search param: [SearchParams(name='criterion', suggest_type=<SUGGEST_TYPE.CATEGORICAL: 'categorical'>, value_range=['gini', 'entropy']), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_leaf_nodes', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100))]
-[2021-10-13 13:27:41,720] [1] [src.model.model] [INFO] [model.py:162] [__init__] initialize lightgbm classifier pipeline: Pipeline(steps=[('standard_scaler', StandardScaler()),
+[2021-10-14 00:41:29,812][__main__][INFO] - params: [SearchParams(name='criterion', suggest_type=<SUGGEST_TYPE.CATEGORICAL: 'categorical'>, value_range=['gini', 'entropy']), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_leaf_nodes', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100))]
+[2021-10-14 00:41:29,813][src.model.model][INFO] - new search param: [SearchParams(name='criterion', suggest_type=<SUGGEST_TYPE.CATEGORICAL: 'categorical'>, value_range=['gini', 'entropy']), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_leaf_nodes', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100))]
+[2021-10-14 00:41:29,817][src.model.model][INFO] - initialize lightgbm classifier pipeline: Pipeline(steps=[('standard_scaler', StandardScaler()),
                 ('model', LGBMClassifier())])
-[2021-10-13 13:27:41,720][src.model.model][INFO] - initialize lightgbm classifier pipeline: Pipeline(steps=[('standard_scaler', StandardScaler()),
-                ('model', LGBMClassifier())])
-[2021-10-13 13:27:41,722] [1] [__main__] [INFO] [main.py:50] [parse_params] params: [SearchParams(name='num_leaves', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='learning_rage', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.0001, 0.01)), SearchParams(name='feature_fraction', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.001, 0.9))]
-[2021-10-13 13:27:41,722][__main__][INFO] - params: [SearchParams(name='num_leaves', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='learning_rage', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.0001, 0.01)), SearchParams(name='feature_fraction', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.001, 0.9))]
-[2021-10-13 13:27:41,723] [1] [src.model.model] [INFO] [model.py:202] [define_search_params] new search param: [SearchParams(name='num_leaves', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='learning_rage', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.0001, 0.01)), SearchParams(name='feature_fraction', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.001, 0.9))]
-[2021-10-13 13:27:41,723][src.model.model][INFO] - new search param: [SearchParams(name='num_leaves', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='learning_rage', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.0001, 0.01)), SearchParams(name='feature_fraction', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.001, 0.9))]
-[2021-10-13 13:27:41,726] [1] [src.search.search] [INFO] [search.py:74] [_optimize] estimator: <src.model.model.RandomForestClassifierPipeline object at 0x7f7a29481ca0>
-[2021-10-13 13:27:41,726][src.search.search][INFO] - estimator: <src.model.model.RandomForestClassifierPipeline object at 0x7f7a29481ca0>
-[I 2021-10-13 13:27:41,727] A new study created in memory with name: random_forest_classifier
-[2021-10-13 13:27:41,728] [1] [src.search.search] [DEBUG] [search.py:121] [_objective] params: {'criterion': 'gini', 'max_depth': 85, 'max_leaf_nodes': 46}
-[2021-10-13 13:27:41,728][src.search.search][DEBUG] - params: {'criterion': 'gini', 'max_depth': 85, 'max_leaf_nodes': 46}
+[2021-10-14 00:41:29,819][__main__][INFO] - params: [SearchParams(name='num_leaves', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='learning_rage', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.0001, 0.01)), SearchParams(name='feature_fraction', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.001, 0.9))]
+[2021-10-14 00:41:29,820][src.model.model][INFO] - new search param: [SearchParams(name='num_leaves', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='max_depth', suggest_type=<SUGGEST_TYPE.INT: 'int'>, value_range=(2, 100)), SearchParams(name='learning_rage', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.0001, 0.01)), SearchParams(name='feature_fraction', suggest_type=<SUGGEST_TYPE.UNIFORM: 'uniform'>, value_range=(0.001, 0.9))]
+[2021-10-14 00:41:29,821][src.dataset.load_dataset][INFO] - load iris dataset
+[2021-10-14 00:41:29,824][src.search.search][INFO] - estimator: <src.model.model.RandomForestClassifierPipeline object at 0x7f5776aa5f10>
+[I 2021-10-14 00:41:29,825] A new study created in memory with name: random_forest_classifier
 /usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
   self._final_estimator.fit(Xt, y, **fit_params_last_step)
 /usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
@@ -131,10 +120,8 @@ docker run \
   self._final_estimator.fit(Xt, y, **fit_params_last_step)
 /usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
   self._final_estimator.fit(Xt, y, **fit_params_last_step)
-[2021-10-13 13:27:42,300] [1] [src.search.search] [DEBUG] [search.py:131] [_objective] result: {'fit_time': array([0.10948944, 0.10802007, 0.09229589, 0.09585595, 0.10107756]), 'score_time': array([0.01227212, 0.01159644, 0.0100131 , 0.0109663 , 0.01282191]), 'test_accuracy': array([0.96666667, 0.96666667, 0.93333333, 0.96666667, 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.94444444, 0.96969697, 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.93333333, 0.96666667, 1.        ])}
-[2021-10-13 13:27:42,300][src.search.search][DEBUG] - result: {'fit_time': array([0.10948944, 0.10802007, 0.09229589, 0.09585595, 0.10107756]), 'score_time': array([0.01227212, 0.01159644, 0.0100131 , 0.0109663 , 0.01282191]), 'test_accuracy': array([0.96666667, 0.96666667, 0.93333333, 0.96666667, 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.94444444, 0.96969697, 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.93333333, 0.96666667, 1.        ])}
-[I 2021-10-13 13:27:42,302] Trial 0 finished with value: 0.9666666666666668 and parameters: {'criterion': 'gini', 'max_depth': 85, 'max_leaf_nodes': 46}. Best is trial 0 with value: 0.9666666666666668.
-2021/10/13 13:27:42 WARNING mlflow.tracking.context.git_context: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
+[I 2021-10-14 00:41:30,519] Trial 0 finished with value: 0.96 and parameters: {'criterion': 'entropy', 'max_depth': 4, 'max_leaf_nodes': 62}. Best is trial 0 with value: 0.96.
+2021/10/14 00:41:30 WARNING mlflow.tracking.context.git_context: Failed to import Git (the Git executable is probably not on your PATH), so Git SHA is not available. Error: Failed to initialize: Bad git executable.
 The git executable must be specified in one of the following ways:
     - be included in your $PATH
     - be set via $GIT_PYTHON_GIT_EXECUTABLE
@@ -151,8 +138,6 @@ $GIT_PYTHON_REFRESH environment variable. Use one of the following values:
 Example:
     export GIT_PYTHON_REFRESH=quiet
 
-[2021-10-13 13:27:42,469] [1] [src.search.search] [DEBUG] [search.py:121] [_objective] params: {'criterion': 'gini', 'max_depth': 12, 'max_leaf_nodes': 63}
-[2021-10-13 13:27:42,469][src.search.search][DEBUG] - params: {'criterion': 'gini', 'max_depth': 12, 'max_leaf_nodes': 63}
 /usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
   self._final_estimator.fit(Xt, y, **fit_params_last_step)
 /usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
@@ -163,47 +148,24 @@ Example:
   self._final_estimator.fit(Xt, y, **fit_params_last_step)
 /usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
   self._final_estimator.fit(Xt, y, **fit_params_last_step)
-[2021-10-13 13:27:43,077] [1] [src.search.search] [DEBUG] [search.py:131] [_objective] result: {'fit_time': array([0.10267377, 0.10558653, 0.09822774, 0.13394928, 0.10050178]), 'score_time': array([0.01222014, 0.01143956, 0.01120734, 0.01151252, 0.01127052]), 'test_accuracy': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.94444444, 0.9023569 , 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ])}
-[2021-10-13 13:27:43,077][src.search.search][DEBUG] - result: {'fit_time': array([0.10267377, 0.10558653, 0.09822774, 0.13394928, 0.10050178]), 'score_time': array([0.01222014, 0.01143956, 0.01120734, 0.01151252, 0.01127052]), 'test_accuracy': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.94444444, 0.9023569 , 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ])}
-[I 2021-10-13 13:27:43,080] Trial 1 finished with value: 0.9533333333333334 and parameters: {'criterion': 'gini', 'max_depth': 12, 'max_leaf_nodes': 63}. Best is trial 0 with value: 0.9666666666666668.
-[2021-10-13 13:27:43,182] [1] [src.search.search] [DEBUG] [search.py:121] [_objective] params: {'criterion': 'entropy', 'max_depth': 64, 'max_leaf_nodes': 57}
-[2021-10-13 13:27:43,182][src.search.search][DEBUG] - params: {'criterion': 'entropy', 'max_depth': 64, 'max_leaf_nodes': 57}
-/usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
-  self._final_estimator.fit(Xt, y, **fit_params_last_step)
-/usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
-  self._final_estimator.fit(Xt, y, **fit_params_last_step)
-/usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
-  self._final_estimator.fit(Xt, y, **fit_params_last_step)
-/usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
-  self._final_estimator.fit(Xt, y, **fit_params_last_step)
-/usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
-  self._final_estimator.fit(Xt, y, **fit_params_last_step)
-[2021-10-13 13:27:43,797] [1] [src.search.search] [DEBUG] [search.py:131] [_objective] result: {'fit_time': array([0.11251354, 0.11027217, 0.1079905 , 0.10352468, 0.11267495]), 'score_time': array([0.01395583, 0.01210237, 0.01152563, 0.01304626, 0.01153469]), 'test_accuracy': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.94444444, 0.9023569 , 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ])}
-[2021-10-13 13:27:43,797][src.search.search][DEBUG] - result: {'fit_time': array([0.11251354, 0.11027217, 0.1079905 , 0.10352468, 0.11267495]), 'score_time': array([0.01395583, 0.01210237, 0.01152563, 0.01304626, 0.01153469]), 'test_accuracy': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.94444444, 0.9023569 , 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.93333333, 0.9       , 1.        ])}
 
 
 <... long training ...>
 
 
-[2021-10-13 13:28:01,129] [1] [src.search.search] [DEBUG] [search.py:131] [_objective] result: {'fit_time': array([0.02718139, 0.03571367, 0.03245997, 0.02901292, 0.02818656]), 'score_time': array([0.00521994, 0.00369692, 0.00353861, 0.00365543, 0.00349498]), 'test_accuracy': array([0.96666667, 0.96666667, 0.86666667, 0.93333333, 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.875     , 0.93333333, 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.86666667, 0.93333333, 1.        ])}
-[2021-10-13 13:28:01,129][src.search.search][DEBUG] - result: {'fit_time': array([0.02718139, 0.03571367, 0.03245997, 0.02901292, 0.02818656]), 'score_time': array([0.00521994, 0.00369692, 0.00353861, 0.00365543, 0.00349498]), 'test_accuracy': array([0.96666667, 0.96666667, 0.86666667, 0.93333333, 1.        ]), 'test_precision_macro': array([0.96969697, 0.96969697, 0.875     , 0.93333333, 1.        ]), 'test_recall_macro': array([0.96666667, 0.96666667, 0.86666667, 0.93333333, 1.        ])}
-[I 2021-10-13 13:28:01,131] Trial 19 finished with value: 0.9466666666666667 and parameters: {'num_leaves': 100, 'max_depth': 12, 'learning_rage': 0.005522899005544211, 'feature_fraction': 0.1544526144374561}. Best is trial 0 with value: 0.9466666666666667.
-[2021-10-13 13:28:01,229] [1] [src.search.search] [INFO] [search.py:90] [_optimize] result for light_gbm_classifier: {'estimator': 'light_gbm_classifier', 'best_score': 0.9466666666666667, 'best_params': {'num_leaves': 87, 'max_depth': 6, 'learning_rage': 0.0035417205462042268, 'feature_fraction': 0.18813851344886215}}
-[2021-10-13 13:28:01,229][src.search.search][INFO] - result for light_gbm_classifier: {'estimator': 'light_gbm_classifier', 'best_score': 0.9466666666666667, 'best_params': {'num_leaves': 87, 'max_depth': 6, 'learning_rage': 0.0035417205462042268, 'feature_fraction': 0.18813851344886215}}
-[2021-10-13 13:28:01,229] [1] [__main__] [INFO] [main.py:88] [main] parameter search results: [{'estimator': 'random_forest_classifier', 'best_score': 0.9666666666666668, 'best_params': {'criterion': 'gini', 'max_depth': 85, 'max_leaf_nodes': 46}}, {'estimator': 'light_gbm_classifier', 'best_score': 0.9466666666666667, 'best_params': {'num_leaves': 87, 'max_depth': 6, 'learning_rage': 0.0035417205462042268, 'feature_fraction': 0.18813851344886215}}]
-[2021-10-13 13:28:01,229][__main__][INFO] - parameter search results: [{'estimator': 'random_forest_classifier', 'best_score': 0.9666666666666668, 'best_params': {'criterion': 'gini', 'max_depth': 85, 'max_leaf_nodes': 46}}, {'estimator': 'light_gbm_classifier', 'best_score': 0.9466666666666667, 'best_params': {'num_leaves': 87, 'max_depth': 6, 'learning_rage': 0.0035417205462042268, 'feature_fraction': 0.18813851344886215}}]
+[I 2021-10-14 00:41:56,870] Trial 19 finished with value: 0.9466666666666667 and parameters: {'num_leaves': 64, 'max_depth': 17, 'learning_rage': 0.0070407009344824675, 'feature_fraction': 0.4416643843187271}. Best is trial 0 with value: 0.9466666666666667.
+[2021-10-14 00:41:57,031][src.search.search][INFO] - result for light_gbm_classifier: {'estimator': 'light_gbm_classifier', 'best_score': 0.9466666666666667, 'best_params': {'num_leaves': 17, 'max_depth': 20, 'learning_rage': 0.006952391958964706, 'feature_fraction': 0.8414032025653786}}
+[2021-10-14 00:41:57,032][__main__][INFO] - parameter search results: [{'estimator': 'random_forest_classifier', 'best_score': 0.9666666666666668, 'best_params': {'criterion': 'entropy', 'max_depth': 14, 'max_leaf_nodes': 65}}, {'estimator': 'light_gbm_classifier', 'best_score': 0.9466666666666667, 'best_params': {'num_leaves': 17, 'max_depth': 20, 'learning_rage': 0.006952391958964706, 'feature_fraction': 0.8414032025653786}}]
 /usr/local/lib/python3.9/site-packages/sklearn/pipeline.py:394: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
   self._final_estimator.fit(Xt, y, **fit_params_last_step)
-[2021-10-13 13:28:01,574] [1] [__main__] [INFO] [main.py:118] [main] random forest evaluation result: accuracy=0.9777777777777777 precision=0.9777777777777777 recall=0.9777777777777777
-[2021-10-13 13:28:01,574][__main__][INFO] - random forest evaluation result: accuracy=0.9777777777777777 precision=0.9777777777777777 recall=0.9777777777777777
+[2021-10-14 00:41:57,518][__main__][INFO] - random forest evaluation result: accuracy=0.9777777777777777 precision=0.9777777777777777 recall=0.9777777777777777
 /usr/local/lib/python3.9/site-packages/sklearn/preprocessing/_label.py:98: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
   y = column_or_1d(y, warn=True)
 /usr/local/lib/python3.9/site-packages/sklearn/preprocessing/_label.py:133: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
   y = column_or_1d(y, warn=True)
 [LightGBM] [Warning] Unknown parameter: learning_rage
-[LightGBM] [Warning] feature_fraction is set=0.18813851344886215, colsample_bytree=1.0 will be ignored. Current value: feature_fraction=0.18813851344886215
-[2021-10-13 13:28:01,780] [1] [__main__] [INFO] [main.py:128] [main] lightgbm evaluation result: accuracy=0.9333333333333333 precision=0.9333333333333333 recall=0.9333333333333333
-[2021-10-13 13:28:01,780][__main__][INFO] - lightgbm evaluation result: accuracy=0.9333333333333333 precision=0.9333333333333333 recall=0.9333333333333333
+[LightGBM] [Warning] feature_fraction is set=0.8414032025653786, colsample_bytree=1.0 will be ignored. Current value: feature_fraction=0.8414032025653786
+[2021-10-14 00:41:57,818][__main__][INFO] - lightgbm evaluation result: accuracy=0.9555555555555556 precision=0.9555555555555556 recall=0.9555555555555556
 ```
 
 ### 3. training history and artifacts
@@ -211,35 +173,24 @@ Example:
 training history and artifacts are recorded under `outputs`
 
 ```sh
-$  tree outputs
+$ tree -a outputs
 outputs
-└── 2021-10-13
-    └── 13-27-41
+├── .gitignore
+├── .gitkeep
+└── 2021-10-14
+    └── 00-41-29
         ├── .hydra
         │   ├── config.yaml
         │   ├── hydra.yaml
-        │   └── overrides.yaml
+        │   ├── light_gbm_classifier.yaml
+        │   ├── overrides.yaml
+        │   └── random_forest_classifier.yaml
         ├── light_gbm_classifier.pickle
         ├── main.log
         ├── mlruns
+        │   ├── .trash
         │   └── 0
-        │       ├── 0438eefaf4a142d293dcd7dcc80ea74b
-        │       │   ├── artifacts
-        │       │   ├── meta.yaml
-        │       │   ├── metrics
-        │       │   │   └── accuracy
-        │       │   ├── params
-        │       │   │   ├── criterion
-        │       │   │   ├── max_depth
-        │       │   │   ├── max_leaf_nodes
-        │       │   │   └── model
-        │       │   └── tags
-        │       │       ├── mlflow.runName
-        │       │       ├── mlflow.source.name
-        │       │       ├── mlflow.source.type
-        │       │       └── mlflow.user
-<...many artifacts...>
-        │       ├── fa20f641372443fe9baf89c65d632b35
+        │       ├── 001f4913ee2c464e9095894c280a827f
         │       │   ├── artifacts
         │       │   ├── meta.yaml
         │       │   ├── metrics
@@ -255,11 +206,14 @@ outputs
         │       │       ├── mlflow.source.name
         │       │       ├── mlflow.source.type
         │       │       └── mlflow.user
+
+<... many files ...>
+
         │       └── meta.yaml
         └── random_forest_classifier.pickle
 ```
 
-you can also open `mlflow ui` 
+you can also open `mlflow ui`
 
 ```sh
 $ cd outputs/2021-10-13/13-27-41
@@ -275,4 +229,3 @@ open localhost:5000 in your web-browser
 ![0](images/0.png)
 
 ![1](images/1.png)
-

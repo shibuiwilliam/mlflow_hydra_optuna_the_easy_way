@@ -295,19 +295,6 @@ antlr4-python3-runtime = "4.8"
 omegaconf = ">=2.1.0,<2.2.0"
 
 [[package]]
-name = "hydra-optuna-sweeper"
-version = "1.1.1"
-description = "Hydra Optuna Sweeper plugin"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-alembic = "<1.7.0"
-hydra-core = ">=1.1.0.dev7"
-optuna = ">=2.5.0"
-
-[[package]]
 name = "idna"
 version = "3.3"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -950,7 +937,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5f6aa17e2eba420099d37d0a82d84673bc1cbc7358eec29c927d07ab75a3917c"
+content-hash = "50a7da8f4a2e1eb87894cede37c2fef69bd72a997535a092f9ef4f557695c05f"
 
 [metadata.files]
 alembic = [
@@ -1089,10 +1076,6 @@ gunicorn = [
 hydra-core = [
     {file = "hydra-core-1.1.1.tar.gz", hash = "sha256:d396d4d979ff66e2d654b8ef5435ad3b6bbd093c4330f3ed316c339d5d741269"},
     {file = "hydra_core-1.1.1-py3-none-any.whl", hash = "sha256:928b154d8105db4ee67d768e3cd0f74ca9373121fc99dee54488393b17a31929"},
-]
-hydra-optuna-sweeper = [
-    {file = "hydra-optuna-sweeper-1.1.1.tar.gz", hash = "sha256:14410df66bf2fa47ba926f6bf8259104acc7aea988edb4f005c4c83f62e5903c"},
-    {file = "hydra_optuna_sweeper-1.1.1-py3-none-any.whl", hash = "sha256:fc40eaf0a8f171c6d009ae2d0b0bf7ce64e67b12819f626827640c085fc8e1c3"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
