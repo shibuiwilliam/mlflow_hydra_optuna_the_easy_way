@@ -216,7 +216,7 @@ outputs
 you can also open `mlflow ui`
 
 ```sh
-$ cd outputs/2021-10-13/13-27-41
+$ cd outputs/2021-10-14/00-41-29
 $ mlflow ui
 [2021-10-13 22:34:51 +0900] [48165] [INFO] Starting gunicorn 20.1.0
 [2021-10-13 22:34:51 +0900] [48165] [INFO] Listening at: http://127.0.0.1:5000 (48165)
