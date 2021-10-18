@@ -4,7 +4,7 @@ The easy way to combine [mlflow](https://mlflow.org/), [hydra](https://hydra.cc/
 
 ## Objective
 
-TODO
+The repository is made to provide a code sample of combining [mlflow](https://mlflow.org/), [hydra](https://hydra.cc/) and [optuna](https://optuna.org/) in structured project.
 
 ## Usage
 
